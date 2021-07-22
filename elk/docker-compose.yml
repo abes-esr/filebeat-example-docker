@@ -5,6 +5,7 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.4
     container_name: elasticsearch
+    restart: unless-stopped
     environment:
       - node.name=elasticsearch
       - discovery.seed_hosts=elasticsearch
@@ -18,7 +19,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - esdata1:/usr/share/elasticsearch/data
+      - ./volumes/elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
     networks:
@@ -27,6 +28,7 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:7.13.4
     container_name: kibana
+    restart: unless-stopped
     environment:
       ELASTICSEARCH_URL: "http://elasticsearch:9200"
       SERVER_MAXPAYLOADBYTES: 2048576
@@ -36,11 +38,6 @@ services:
       - elasticsearch
     networks:
       - filebeat-example
-
-volumes:
-  esdata1:
-    driver: local
-
 
 networks:
   filebeat-example:
