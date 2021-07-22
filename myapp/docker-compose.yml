@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  myapp-filebeat:
+    image: docker.elastic.co/beats/filebeat:7.13.4
+    container_name: myapp-filebeat
+    restart: unless-stopped
+    user: root
+    volumes:
+      - ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    environment:
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
+      - KIBANA_HOST=${KIBANA_HOST:-node1}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
+    command: ["--strict.perms=false"]
+    networks:
+      - filebeat-example
+
+networks:
+  filebeat-example:
+    name: filebeat-example
