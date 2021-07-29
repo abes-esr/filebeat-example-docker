@@ -15,9 +15,20 @@ services:
       - "co.elastic.logs/fileset.stderr=error"
 
 
-  myapp-filebeat:
+  myapp-with-customlog:
+    image: ubuntu
+    container_name: myapp-with-customlog
+    restart: unless-stopped
+    volumes:
+      - ./custom-log-generator.sh:/custom-log-generator.sh
+    command: /custom-log-generator.sh
+    labels:
+      - "co.elastic.logs/enabled=true"
+
+
+  filebeat-docker-monitoring:
     image: docker.elastic.co/beats/filebeat:7.13.4
-    container_name: myapp-filebeat
+    container_name: filebeat-docker-monitoring
     restart: unless-stopped
     user: root
     volumes:
