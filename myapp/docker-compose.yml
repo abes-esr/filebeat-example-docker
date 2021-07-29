@@ -8,6 +8,11 @@ services:
     restart: unless-stopped
     ports:
       - 8080:80
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/module=nginx"
+      - "co.elastic.logs/fileset.stdout=access"
+      - "co.elastic.logs/fileset.stderr=error"
 
 
   myapp-filebeat:

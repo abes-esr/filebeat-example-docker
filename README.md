@@ -51,5 +51,5 @@ On peut ensuite aller consulter les logs remontés dans elasticsearch/kibana en 
 
 ## TODO
 
-- [ ] faire en sorte que filebeat reconnaisse le format de log de nginx car actuellement ca remonte les lignes de logs sans les parser
+- faire en sorte que filebeat reconnaisse un format de log personnalisé
 
