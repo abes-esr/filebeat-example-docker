@@ -41,6 +41,11 @@ cd ../myapp/
 docker-compose up -d
 ```
 
+Si on veut simuler des requêtes sur le serveur web de l'application exemple, on peut le faire comme ceci :
+```
+curl http://127.0.0.1:8080
+```
+
 On peut ensuite aller consulter les logs remontés dans elasticsearch/kibana en se connectant sur : http://127.0.0.1:5601/app/discover
 
 
