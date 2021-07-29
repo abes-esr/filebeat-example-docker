@@ -24,6 +24,7 @@ services:
     command: /custom-log-generator.sh
     labels:
       - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.dissect.tokenizer=%{status} - %{message}"
 
 
   filebeat-docker-monitoring:
