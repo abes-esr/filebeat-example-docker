@@ -48,4 +48,8 @@ curl http://127.0.0.1:8080
 
 On peut ensuite aller consulter les logs remontés dans elasticsearch/kibana en se connectant sur : http://127.0.0.1:5601/app/discover
 
+## Explications et observations
+
+On remarque que le conteneur batch chargé de produire des logs personnalisée (nommé `myapp-with-customlog`) est correctement parsé par [le tokenizer fourni par filebeat](https://github.com/kerphi/filebeat-example-docker/blob/main/myapp/docker-compose.yml#L25-L27) :
+![image](https://user-images.githubusercontent.com/328244/127512443-3e083071-46fc-42e7-9ea5-9c646dbfef33.png)
 
