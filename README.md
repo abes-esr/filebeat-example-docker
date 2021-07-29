@@ -50,6 +50,6 @@ On peut ensuite aller consulter les logs remontés dans elasticsearch/kibana en 
 
 ## Explications et observations
 
-On remarque que le conteneur batch chargé de produire des logs personnalisée (nommé `myapp-with-customlog`) est correctement parsé par [le tokenizer fourni par filebeat](https://github.com/kerphi/filebeat-example-docker/blob/main/myapp/docker-compose.yml#L25-L27) :
+On remarque que le conteneur batch chargé de produire des logs personnalisée (nommé `myapp-with-customlog`) est correctement parsé par [le tokenizer fourni par filebeat](https://github.com/kerphi/filebeat-example-docker/blob/main/myapp/docker-compose.yml#L25-L27). Les info parsées depuis les lignes de logs sont disponibles dans les champs `dissect.status` et `dissect.message`.
 ![image](https://user-images.githubusercontent.com/328244/127512443-3e083071-46fc-42e7-9ea5-9c646dbfef33.png)
 
