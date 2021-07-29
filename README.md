@@ -35,7 +35,7 @@ cd elk/
 docker-compose up -d
 ```
 
-On lance ensuite filebeat et l'application exemple (un serveur nginx) :
+On lance ensuite filebeat et l'application exemple (un conteneur avec nginx + un conteneur pour un batch qui produit des logs personnalisées) :
 ```
 cd ../myapp/
 docker-compose up -d
@@ -48,8 +48,4 @@ curl http://127.0.0.1:8080
 
 On peut ensuite aller consulter les logs remontés dans elasticsearch/kibana en se connectant sur : http://127.0.0.1:5601/app/discover
 
-
-## TODO
-
-- faire en sorte que filebeat reconnaisse un format de log personnalisé
 
