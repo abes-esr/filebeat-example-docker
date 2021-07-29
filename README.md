@@ -1,6 +1,6 @@
 # filebeat-example-docker
 
-Exemple de configuration pour utiliser filebeat pour surveiller les logs de conteneurs docker
+Exemple de configuration pour utiliser filebeat pour surveiller les logs de conteneurs docker en se basant sur les recommendations https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
 
 ## Pre-requis
 
