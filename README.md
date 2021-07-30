@@ -21,7 +21,7 @@ cf https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
 
 ```
 # ces deux lignes ne sont pas forcément nécessaires, elles permettent de préparer
-# elasticsearch a gérer des données dans espace restreint
+# elasticsearch a gérer des données dans un espace restreint (pas bcp de disque dispo)
 curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_cluster/settings -d '{ "transient": { "cluster.routing.allocation.disk.threshold_enabled": false } }'
 curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
 
