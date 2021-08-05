@@ -54,15 +54,19 @@ On peut ensuite aller consulter les logs remontés dans elasticsearch/kibana en 
 
 ## Explications et observations
 
+### Utilisation des modules standards de filebeat
+
 On remarque que le conteneur web qui va générer des logs au format nginx (nommé `myapp-web`) va être correctement parsé par [le module nginx de filebeat](https://github.com/kerphi/filebeat-example-docker/blob/main/myapp/docker-compose.yml#L11-L15). Et on remarque au passage que les logs qui ne sont pas au format nginx sont également remontées par filebeat :
 
 <img src="https://user-images.githubusercontent.com/328244/127513686-803c6684-8a4a-4d33-a2a3-f4ce0c03a7c4.png" width="500px" />
 
-
+### Traitement de logs spécifiques par filebeat
 
 On remarque que le conteneur batch chargé de produire des logs personnalisées (nommé `myapp-with-customlog`) est correctement parsé par [le tokenizer fourni par filebeat](https://github.com/kerphi/filebeat-example-docker/blob/main/myapp/docker-compose.yml#L25-L27). Les logs parsées sont ensuite disponibles dans les champs `dissect.status` et `dissect.message` dans kibana.
 
 <img src="https://user-images.githubusercontent.com/328244/127512443-3e083071-46fc-42e7-9ea5-9c646dbfef33.png" width="500px" />
+
+### Remontée de champs personnalisée par conteneur
 
 On remarque que des champs "abes.appli" et "abes.source" peuvent être remontés par filebeats (en conservant une configuration globale au serveur) et [personnalisé par chaque conteneur à l'aide du système de labels](https://github.com/kerphi/filebeat-example-docker/blob/main/myapp/docker-compose.yml#L31-L36). Ceci permet de regrouper facilement les conteneur d'une même appli au niveau du puits de logs :
 
