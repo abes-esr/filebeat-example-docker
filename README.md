@@ -72,3 +72,35 @@ On remarque que des champs "abes.appli" et "abes.source" peuvent être remontés
 
 ![image](https://user-images.githubusercontent.com/328244/128374129-3d397b19-30c3-4036-aa69-ce11f181f443.png)
 
+## Exemples de politiques d'infra / dev
+
+### Politique d'infra 
+
+Chaque serveur qui héberge des conteneurs docker possède un conteneur nommé `abes-filebeat` qui est une instance de filebeat préconfigurée pour envoyer les logs vers le puits de logs de l'Abes. Cette instance de filebeat a comme rôle de surveiller les logs des conteneurs docker de la machine dont ont en demande la surveillance. Par défaut aucun conteneur n'est surveillé.
+
+### Politique de dev
+
+Chaque application qui est déployée avec docker et qui produit des logs (c'est à dire toutes les applis ?), doit les produire de la bonne façon et indiquer au démon filebeat comment les récupérer pour qu'il puisse ensuite les envoyer correctement au puits de log (logstash / elasticsearch / kibana).
+
+L'application doit respecter quelques règles :
+
+1) produire ses logs sur stdout et stderr
+2) produire ses logs personnalisées en respectant un format
+3) proposer un fichier `docker-compose.filebeat.yml` contenant la configuration attendue par filebeat (sous forme de labels docker)
+
+#### stderr stdout
+
+Pour que le conteneur de l'application produire ses logs sur stdout et stderr, il y a plusieurs possibilités ... TODO expliquer
+
+#### format pour les log personnalisées
+
+TODO expliquer ici que les appli java/métier doivent produire des logs spécifique en respectant certaines règles, lister les règles, donner des exemple de configuration de log4j etc ...
+
+#### docker-compose.filebeat.yml
+
+Le fichier `docker-compose.filebeat.yml` viendra surcharger son fichier `docker-compose.yml` au moment du déploiement. Il possède uniquement les informations nécessaires à filebeat pour remonter les logs sous forme de labels docker (cf [recommandations](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html#_customize_your_configuration)).
+
+Voici des exemples de fichier `docker-compose.filebeat.yml` donc chaque application peut s'inspirer :
+```
+TODO
+```
