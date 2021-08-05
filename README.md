@@ -66,7 +66,7 @@ On remarque que le conteneur batch chargé de produire des logs personnalisées 
 
 <img src="https://user-images.githubusercontent.com/328244/127512443-3e083071-46fc-42e7-9ea5-9c646dbfef33.png" width="500px" />
 
-### Remontée de champs personnalisée par conteneur
+### Remontée de champs personnalisés par conteneur
 
 On remarque que des champs "abes.appli" et "abes.source" peuvent être remontés par filebeats (en conservant une configuration globale au serveur) et [personnalisé par chaque conteneur à l'aide du système de labels](https://github.com/kerphi/filebeat-example-docker/blob/main/myapp/docker-compose.yml#L31-L36). Ceci permet de regrouper facilement les conteneur d'une même appli au niveau du puits de logs :
 
