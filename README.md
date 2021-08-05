@@ -64,4 +64,7 @@ On remarque que le conteneur batch chargé de produire des logs personnalisées 
 
 <img src="https://user-images.githubusercontent.com/328244/127512443-3e083071-46fc-42e7-9ea5-9c646dbfef33.png" width="500px" />
 
+On remarque que des champs "abes.appli" et "abes.source" peuvent être remontés par filebeats (en conservant une configuration globale au serveur) et [personnalisé par chaque conteneur à l'aide du système de labels](todo). Ceci permet de regrouper facilement les conteneur d'une même appli au niveau du puits de logs :
+
+![image](https://user-images.githubusercontent.com/328244/128374129-3d397b19-30c3-4036-aa69-ce11f181f443.png)
 
