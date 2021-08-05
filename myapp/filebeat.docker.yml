@@ -16,3 +16,11 @@ output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
+
+# exemple de conf a mettre pour envoyer vers logstash
+# et pas directement vers elasticsearch
+# A noter: filebeat ne sait pas gérer deux "output" simultanément
+#output.logstash:
+#  hosts: ["logstash-host:5044"]
+
+
