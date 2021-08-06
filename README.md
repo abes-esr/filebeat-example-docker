@@ -76,31 +76,33 @@ On remarque que des champs "abes.appli" et "abes.source" peuvent être remontés
 
 ### Politique d'infra 
 
-Chaque serveur qui héberge des conteneurs docker possède un conteneur nommé `abes-filebeat` qui est une instance de filebeat préconfigurée pour envoyer les logs vers le puits de logs de l'Abes. Cette instance de filebeat a comme rôle de surveiller les logs des conteneurs docker de la machine dont ont en demande la surveillance. Par défaut aucun conteneur n'est surveillé.
+Chaque serveur qui héberge des conteneurs docker possède un conteneur nommé `abes-filebeat` qui est une instance de filebeat préconfigurée pour envoyer les logs vers le puits de logs de l'Abes. Cette instance de filebeat a comme rôle de surveiller les logs des conteneurs docker de la machine dont ont en demande la surveillance. Par défaut filebeat est configurer pour ne surveiller aucun conteneur.
 
 ### Politique de dev
 
-Chaque application qui est déployée avec docker et qui produit des logs (c'est à dire toutes les applis ?), doit les produire de la bonne façon et indiquer au démon filebeat comment les récupérer pour qu'il puisse ensuite les envoyer correctement au puits de log (logstash / elasticsearch / kibana).
+Chaque application qui est déployée avec docker et qui produit des logs (c'est à dire toutes les applis ?), doit les produire de la même façon et indiquer au démon filebeat comment les récupérer pour qu'il puisse ensuite les envoyer correctement au puits de log (logstash / elasticsearch / kibana).
 
 L'application doit respecter quelques règles :
 
-1) produire ses logs sur stdout et stderr
-2) produire ses logs personnalisées en respectant un format
-3) proposer un fichier `docker-compose.filebeat.yml` contenant la configuration attendue par filebeat (sous forme de labels docker)
+1) produire ses logs à surveiller sur stdout et stderr
+2) paramétrer filebeat avec des labels docker
+3) produire ses logs personnalisées en respectant un format
 
 #### stderr stdout
 
 Pour que le conteneur de l'application produire ses logs sur stdout et stderr, il y a plusieurs possibilités ... TODO expliquer
 
-#### format pour les log personnalisées
+#### paramètres pour filebeat - labels docker
 
-TODO expliquer ici que les appli java/métier doivent produire des logs spécifique en respectant certaines règles, lister les règles, donner des exemple de configuration de log4j etc ...
+Le paramétrage de la remontée des logs dans filebeat se fait au niveau de chaque conteneur en suivant une nomenclature de "labels docker" (cf [recommandations](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html#_customize_your_configuration)).
 
-#### docker-compose.filebeat.yml
-
-Le fichier `docker-compose.filebeat.yml` viendra surcharger son fichier `docker-compose.yml` au moment du déploiement. Il possède uniquement les informations nécessaires à filebeat pour remonter les logs sous forme de labels docker (cf [recommandations](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html#_customize_your_configuration)).
+Il est possible d'isoler ces labels dans un fichier `docker-compose.filebeat.yml` qui viendra s'aggréger au fichier standard `docker-compose.yml` de l'application au moment du déploiement.
 
 Voici des exemples de fichier `docker-compose.filebeat.yml` donc chaque application peut s'inspirer :
 ```
 TODO
 ```
+
+#### format pour les log personnalisées
+
+TODO expliquer ici que les appli java/métier doivent produire des logs spécifique en respectant certaines règles, lister les règles, donner des exemple de configuration de log4j etc ...
