@@ -112,17 +112,17 @@ services:
       - "co.elastic.logs/fileset.stderr=error"
       - "co.elastic.logs/processors.add_fields.target=abes"
       - "co.elastic.logs/processors.add_fields.fields.appli=monapplication"
-      - "co.elastic.logs/processors.add_fields.fields.source=Httpd"
+      - "co.elastic.logs/processors.add_fields.fields.middleware=Httpd"
 ```
 
 Les labels ont la signification suivante :
 - `co.elastic.logs/enabled=true` : signifie qu'on souhaite que filebeat remonte les logs de ce conteneur (par défault c'est `false`)
-- `co.elastic.logs/module=nginx` : signifie qu'on dit à filebeat que ce conteneur produit des logs au format nginx ce qui lui permettra de les envoyées découpées dans le puits de logs
+- `co.elastic.logs/module=nginx` : signifie qu'on dit à filebeat que ce conteneur produit des logs au format nginx ce qui lui permettra de les envoyées découpées dans le puits de logs (cf la liste des modules filebeat disponibles : https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-modules.html)
 - `co.elastic.logs/fileset.stdout=access` : signifie que filebeat doit surveiller les logs stdout du conteneur
 - `co.elastic.logs/fileset.stderr=error` : signifie que filebeat doit surveiller les logs stderr du conteneur
 - `co.elastic.logs/processors.add_fields.target=abes` : signifie qu'on souhaite ajouter dans le puits de logs les deux champs suivants en rateau sous le parent nommé "abes" (cf [la doc](https://www.elastic.co/guide/en/beats/filebeat/current/add-fields.html#add-fields))
 - `co.elastic.logs/processors.add_fields.fields.appli=monapplication` : signifie qu'on souhaite faire remonter un champs personnalisé nommé "abes.appli" (présence de "abes." cf paramètre target au dessus) qui contiendra comme valeur "monapplication" pour le conteneur présent. Ce champ "abes.appli" est obligatoire, il doit contenir le nom de l'application car cette dernière peut être éclatée en plusieurs conteneurs (un pour le web, un pour le back, un pour les batch etc ...), c'est ce champ qui permet de regrouper tous les conteneur d'une même application au niveau du puits de logs. Remarque : dans une architecture de type orchestrateur (ex: OKD), c'est probablement le nom du pod qui véhiculera la valeur de "abes.appli".
-- `co.elastic.logs/processors.add_fields.fields.source=Httpd` : le champs "abes.source" est obligatoire, il permet d'indiquer au puits de logs de l'Abes (à la partie logstash précisément) dans quel index elasticsearch doit il classer ces logs. Les valeurs possibles sont : "Httpd", _à compléter_.
+- `co.elastic.logs/processors.add_fields.fields.middleware=Httpd` : le champs "abes.middleware" est obligatoire, il permet d'indiquer au puits de logs de l'Abes (à la partie logstash précisément) la nature des logs envoyées et donc dans quel index elasticsearch doit il classer ces logs. Les valeurs possibles sont : "Httpd", _à compléter_.
 
 #### format pour les log personnalisées
 
