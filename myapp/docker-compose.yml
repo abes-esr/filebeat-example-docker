@@ -13,9 +13,9 @@ services:
       - "co.elastic.logs/module=nginx"
       - "co.elastic.logs/fileset.stdout=access"
       - "co.elastic.logs/fileset.stderr=error"
-      - "co.elastic.logs/processors.add_fields.target=abes"
-      - "co.elastic.logs/processors.add_fields.fields.appli=myapp"
-      - "co.elastic.logs/processors.add_fields.fields.middleware=Httpd"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=myapp"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=Httpd"
 
 
   myapp-with-customlog:
@@ -28,13 +28,13 @@ services:
     labels:
       - "co.elastic.logs/enabled=true"
       - "co.elastic.logs/processors.dissect.tokenizer=%{status} - %{message}"
-      - "co.elastic.logs/processors.add_fields.target=abes"
-      - "co.elastic.logs/processors.add_fields.fields.appli=myapp"
-      - "co.elastic.logs/processors.add_fields.fields.middleware=adhoc"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=myapp"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=adhoc"
 
 
   filebeat-docker-monitoring:
-    image: docker.elastic.co/beats/filebeat:7.13.4
+    image: docker.elastic.co/beats/filebeat:7.14.0
     container_name: filebeat-docker-monitoring
     restart: unless-stopped
     user: root
