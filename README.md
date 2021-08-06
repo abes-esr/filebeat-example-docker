@@ -70,7 +70,7 @@ On remarque que le conteneur batch chargé de produire des logs personnalisées 
 
 On remarque que des champs "abes_appli" et "abes_middleware" peuvent être remontés par filebeats (en conservant une configuration globale au serveur) et [personnalisé par chaque conteneur à l'aide du système de labels](https://github.com/kerphi/filebeat-example-docker/blob/644e8d0b0be4d0f1249b656df76a95424453e6f8/myapp/docker-compose.yml#L11-L18). Ceci permet de regrouper facilement les conteneur d'une même appli au niveau du puits de logs :
 
-![image](https://user-images.githubusercontent.com/328244/128374129-3d397b19-30c3-4036-aa69-ce11f181f443.png)
+![image](https://user-images.githubusercontent.com/328244/128502198-fdb569b9-4c6a-46a0-b551-b1a69167c78c.png)
 
 ## Exemples de politiques d'infra / dev
 
