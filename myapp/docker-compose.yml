@@ -47,7 +47,7 @@ services:
       - KIBANA_HOST=${KIBANA_HOST:-node1}
       - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
-    command: ["--strict.perms=false"]
+    command: ["-e", "--strict.perms=false"]
     networks:
       - filebeat-example
 
