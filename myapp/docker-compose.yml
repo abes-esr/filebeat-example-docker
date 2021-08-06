@@ -15,7 +15,7 @@ services:
       - "co.elastic.logs/fileset.stderr=error"
       - "co.elastic.logs/processors.add_fields.target=abes"
       - "co.elastic.logs/processors.add_fields.fields.appli=myapp"
-      - "co.elastic.logs/processors.add_fields.fields.source=Httpd"
+      - "co.elastic.logs/processors.add_fields.fields.middleware=Httpd"
 
 
   myapp-with-customlog:
@@ -30,10 +30,7 @@ services:
       - "co.elastic.logs/processors.dissect.tokenizer=%{status} - %{message}"
       - "co.elastic.logs/processors.add_fields.target=abes"
       - "co.elastic.logs/processors.add_fields.fields.appli=myapp"
-      - "co.elastic.logs/processors.add_fields.fields.source=raw"
-        # etrangement, utiliser "source" comme clé sans préciser par "abes." ne fonctionne pas,
-        # cela bloque la remontée des logs par filebeat
-        #      - "co.elastic.logs/processors.add_fields.fields.source=raw"
+      - "co.elastic.logs/processors.add_fields.fields.middleware=adhoc"
 
 
   filebeat-docker-monitoring:
