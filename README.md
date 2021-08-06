@@ -76,7 +76,7 @@ On remarque que des champs "abes.appli" et "abes.source" peuvent être remontés
 
 ### Politique d'infra 
 
-Chaque serveur qui héberge des conteneurs docker possède un conteneur nommé `abes-filebeat` qui est une instance de filebeat préconfigurée pour envoyer les logs vers le puits de logs de l'Abes. Cette instance de filebeat a comme rôle de surveiller les logs des conteneurs docker de la machine dont ont en demande la surveillance. Par défaut filebeat est configuré pour ne surveiller aucun conteneur.
+Chaque serveur qui héberge des conteneurs docker possède un conteneur nommé `abes-filebeat-docker` qui est une instance de filebeat préconfigurée pour envoyer les logs vers le puits de logs de l'Abes. Cette instance de filebeat a comme rôle de surveiller les logs des conteneurs docker de la machine dont ont en demande la surveillance. Par défaut filebeat est configuré pour ne surveiller aucun conteneur.
 
 ### Politique de dev
 
