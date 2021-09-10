@@ -1,6 +1,19 @@
 # filebeat-example-docker
 
-Exemple de configuration pour utiliser filebeat pour surveiller les logs de conteneurs docker en se basant sur les recommandations https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
+Exemple de configuration pour utiliser filebeat pour la surveillance des logs docker en se basant sur les recommandations https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
+
+Ce dépôt contient un PoC qui permet de tester avec une mini architecture en totale autonomie en local :
+- un kibana + elasticsearch (répertoire elk)
+- un filebeat + deux applications (répertoire myapp)
+
+Les deux applications générent des logs dans leurs conteneurs docker sur stdout et stderr. Le conteneur filebeat va automatiquement écouter et ces logs au nveau du démon docker de la machine et les envoyer à elasticsearch directement. Le conteneur Kibana permet de visualiser les logs de l'elasticsearch.
+
+```
+app1 -> filebeat -> elasticsearch -> kibana
+app2 ->
+```
+
+A noter : à l'Abes nous utilisons (à la date de septembre 2021) un intermédiaire logstash qui fonctionne de la même manière au niveau de filebeat qui va alors envoyer les logs à logstash plutôt qu'à elasticsearch directement.
 
 ## Pre-requis
 
