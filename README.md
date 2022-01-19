@@ -106,10 +106,10 @@ L'application doit respecter quelques règles :
 Pour que le conteneur de l'application produise ses logs sur stdout et stderr, il y a plusieurs possibilités.
   - Si c'est une application Java le mieux est d'exécuter le process java en premier plan (foreground). Exemple de point d'entrée docker exécutant l'appli java à partir d'un JAR en premier plan : ``ENTRYPOINT ["java","-jar","/app.jar"]``
   - Si c'est une script shell (exemple un batch), alors on logguer sur stdout ou stderr au choix en utilisant ``>/dev/stdout`` (par défaut si rien n'est précisé c'est sur stdout que ça va) ou ``>/dev/stderr`` pour logguer les erreurs. Exemple :
-  ```bash
-  echo "INFO: ma ligne de log pour aller sur stdout" >/dev/stdout
-  echo "ERROR: ma ligne de log pour aller sur stderr" >/dev/stderr
-  ```
+    ```bash
+    echo "INFO: ma ligne de log pour aller sur stdout" >/dev/stdout
+    echo "ERROR: ma ligne de log pour aller sur stderr" >/dev/stderr
+    ```
   - Si c'est une application tierce qu'on ne peut donc pas trop modifier et qui loggue déjà dans un fichier, alors on peut soit configurer l'application pour lui demander de logguer les erreurs sur le fichier ``/proc/self/fd/2`` (c'est la même chose que le fichier ``/dev/stderr``) sur le fichier ``/proc/self/fd/1`` (ou au choix ``/dev/stdout``), soit identifier le chemin du fichier vers lequel l'application va logguer et s'en sortir avec un système de lien symbolique comme par exemple ce que l'image docker officielle de nginx fait : cf son [Dockerfile](https://github.com/nginxinc/docker-nginx/blob/8921999083def7ba43a06fabd5f80e4406651353/mainline/jessie/Dockerfile#L21-L23).
   
 #### paramètres pour filebeat - labels docker
@@ -129,7 +129,7 @@ Les labels ont la signification suivante :
 - `co.elastic.logs/enabled=true` : signifie qu'on souhaite que filebeat remonte les logs de ce conteneur (par défault c'est `false`)
 - `co.elastic.logs/processors.add_fields.target=` : signifie qu'on souhaite ajouter les deux champs `abes_appli` et `abes_middleware` dans le puits de logs en rateau à la racine des champs (cf [la doc](https://www.elastic.co/guide/en/beats/filebeat/current/add-fields.html#add-fields))
 - `co.elastic.logs/processors.add_fields.fields.abes_appli=monapplication` : signifie qu'on souhaite faire remonter un champs personnalisé nommé "abes_appli" qui contiendra comme valeur "monapplication" pour le conteneur présent. Ce champ "abes_appli" est obligatoire, il doit contenir le nom de l'application car cette dernière peut être éclatée en plusieurs conteneurs (un pour le web, un pour le back, un pour les batch etc ...), c'est ce champ qui permet de regrouper tous les conteneur d'une même application au niveau du puits de logs. Remarque : dans une architecture de type orchestrateur (ex: OKD), c'est probablement le nom du pod qui remplacera la valeur de "abes_appli".
-- `co.elastic.logs/processors.add_fields.fields.abes_middleware=Httpd` : le champs "abes_middleware" est obligatoire, il permet d'indiquer au puits de logs de l'Abes (via logstash précisément) la nature des logs envoyées et donc dans quel index elasticsearch doit il classer ces logs. Les valeurs possibles sont : "Httpd", _à compléter_.
+- `co.elastic.logs/processors.add_fields.fields.abes_middleware=Httpd` : le champs "abes_middleware" est obligatoire, il permet d'indiquer au puits de logs de l'Abes (via logstash précisément) la nature des logs envoyées et donc dans quel index elasticsearch doit il classer ces logs. Les valeurs possibles sont : "adhoc", "Httpd" (mettre "adhoc" si ce sont des logs dont le format est spécifique à l'application).
 
 Pour un exemple complet qui montre aussi comment spécifier un format de log précis, on peut se référer à https://github.com/abes-esr/abes-filebeat-docker/blob/f4b19dfdccab690801c550c61724bd09cbeb6f5b/docker-compose.yml#L24-L37
 
