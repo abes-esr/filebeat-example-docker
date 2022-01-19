@@ -103,8 +103,15 @@ L'application doit respecter quelques règles :
 
 #### stderr stdout
 
-Pour que le conteneur de l'application produire ses logs sur stdout et stderr, il y a plusieurs possibilités ... TODO expliquer
-
+Pour que le conteneur de l'application produise ses logs sur stdout et stderr, il y a plusieurs possibilités.
+  - Si c'est une application Java le mieux est d'exécuter le process java en premier plan (foreground). Exemple de point d'entrée docker exécutant l'appli java à partir d'un JAR en premier plan : ``ENTRYPOINT ["java","-jar","/app.jar"]``
+  - Si c'est une script shell (exemple un batch), alors on logguer sur stdout ou stderr au choix en utilisant ``>/dev/stdout`` (par défaut si rien n'est précisé c'est sur stdout que ça va) ou ``>/dev/stderr`` pour logguer les erreurs. Exemple :
+  ```bash
+  echo "INFO: ma ligne de log pour aller sur stdout" >/dev/stdout
+  echo "ERROR: ma ligne de log pour aller sur stderr" >/dev/stderr
+  ```
+  - Si c'est une application tierce qu'on ne peut donc pas trop modifier et qui loggue déjà dans un fichier, alors on peut soit configurer l'application pour lui demander de logguer les erreurs sur le fichier ``/proc/self/fd/2`` (c'est la même chose que le fichier ``/dev/stderr``) sur le fichier ``/proc/self/fd/1`` (ou au choix ``/dev/stdout``), soit identifier le chemin du fichier vers lequel l'application va logguer et s'en sortir avec un système de lien symbolique comme par exemple ce que l'image docker officielle de nginx fait : cf son [Dockerfile](https://github.com/nginxinc/docker-nginx/blob/8921999083def7ba43a06fabd5f80e4406651353/mainline/jessie/Dockerfile#L21-L23).
+  
 #### paramètres pour filebeat - labels docker
 
 Le paramétrage de la remontée des logs dans filebeat se fait au niveau de chaque conteneur en suivant une nomenclature de "labels docker" (cf [recommandations](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html#_customize_your_configuration)).
